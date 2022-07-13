@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/util/constants.dart';
@@ -13,6 +15,15 @@ abstract class RegisterModule {
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
+  @lazySingleton
+  Dio get dio => getDio();
+
+  @lazySingleton
+  InternetConnectionChecker get internetConnectionChecker =>
+      InternetConnectionChecker();
+
+  @lazySingleton
+  Location get location => Location();
 }
 
 @InjectableInit(
@@ -25,7 +36,7 @@ Future<void> configureDependencies() async => $initGetIt(sl);
 Dio getDio() {
   Dio dio = Dio(
     BaseOptions(
-      baseUrl: Endpoints.BASE_URL,
+      baseUrl: Endpoints.baseUrl,
       headers: {
         "Accept": "application/json",
       },
