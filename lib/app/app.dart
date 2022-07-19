@@ -6,6 +6,7 @@ import '../core/util/generate_screen.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   State<App> createState() => _AppState();
@@ -24,6 +25,7 @@ class _AppState extends State<App> {
       designSize: const Size(375, 812),
       builder: (_) {
         return MaterialApp(
+          navigatorKey: App.navigatorKey,
           title: 'Beitouti',
           debugShowCheckedModeBanner: false,
           onGenerateRoute: GenerateScreen.onGenerate,
