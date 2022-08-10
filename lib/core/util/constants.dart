@@ -7,11 +7,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../features/auth/data/models/request_register_model.dart';
 
 class Endpoints {
-  static const baseUrl = "https://78f8-31-9-140-112.ngrok.io/api/delivery";
-  static const imageUrl = "https://78f8-31-9-140-112.ngrok.io";
-  static const socketUrl = "abf2-31-9-140-112.ngrok.io";
+  static const baseUrl = "http://4183-46-213-207-239.ngrok.io/api/delivery";
+  static const imageUrl = "http://4183-46-213-207-239.ngrok.io";
+  static const socketUrl = "702a-46-213-207-239.ngrok.io";
   static const authBroadcasting =
-      "https://78f8-31-9-140-112.ngrok.io/api/broadcasting/auth";
+      "http://4183-46-213-207-239.ngrok.io/api/broadcasting/auth";
   static const sendCode = "/send-code";
   static const checkCodeAndAccessibility = "/check-code-and-accessibility";
   static const requestRegister = "/request-register";

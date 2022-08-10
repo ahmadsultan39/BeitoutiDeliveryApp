@@ -21,7 +21,7 @@ class CurrentDeliveryModel extends CurrentDelivery {
     required String destination,
     required String selectedDeliveryTime,
     required int totalMealCount,
-    required int totalCost,
+    required double totalCost,
     required this.orders,
     required this.chefLocation,
   }) : super(

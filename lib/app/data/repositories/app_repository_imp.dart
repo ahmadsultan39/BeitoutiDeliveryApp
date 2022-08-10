@@ -48,16 +48,8 @@ class AppRepositoryImp extends BaseRepositoryImpl implements AppRepository {
   @override
   Future<Either<Failure, PusherOptions>> getPusherOptions() async {
     try {
-      final token = await _local.token;
       final PusherOptions options = PusherOptions(
-        host: Endpoints.socketUrl,
-        encrypted: true,
-        auth: PusherAuth(
-          Endpoints.authBroadcasting,
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
-        ),
+        host: '702a-46-213-207-239.ngrok.io',
       );
       return Right(options);
     } catch (e) {

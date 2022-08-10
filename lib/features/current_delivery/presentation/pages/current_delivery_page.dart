@@ -50,16 +50,18 @@ class _CurrentDeliveryPageState extends State<CurrentDeliveryPage> {
                   );
                 },
                 child: Center(
-                  child: Text("${state.currentDelivery!.totalCost}\n"
-                      "${state.currentDelivery!.totalMealCount}\n"
-                      "${state.currentDelivery!.id}\n"
-                      "${state.currentDelivery!.chefName}\n"
-                      "${state.currentDelivery!.chefLocation.longitude}\n"
-                      "${state.currentDelivery!.chefLocation.latitude}\n"
-                      "${state.currentDelivery!.chefLocation.name}\n"
-                      "${state.currentDelivery!.selectedDeliveryTime}\n"
-                      "${state.currentDelivery!.destination}\n"
-                      "${state.currentDelivery!.orders}\n"),
+                  child: Text(
+                    "${state.currentDelivery!.totalCost}\n"
+                    "${state.currentDelivery!.totalMealCount}\n"
+                    "${state.currentDelivery!.id}\n"
+                    "${state.currentDelivery!.chefName}\n"
+                    "${state.currentDelivery!.chefLocation.longitude}\n"
+                    "${state.currentDelivery!.chefLocation.latitude}\n"
+                    "${state.currentDelivery!.chefLocation.name}\n"
+                    "${state.currentDelivery!.selectedDeliveryTime}\n"
+                    "${state.currentDelivery!.destination}\n"
+                    "${state.currentDelivery!.orders}\n",
+                  ),
                 ),
               ),
             state.isLoading ? const Loader() : Container(),
