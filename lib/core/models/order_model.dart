@@ -17,7 +17,7 @@ class OrderModel extends Order {
     required String userName,
     required String userPhoneNumber,
     required int mealsCount,
-    required int totalCost,
+    required double totalCost,
     required bool? hasNotes,
     required OrderStatus? status,
     required this.meals,

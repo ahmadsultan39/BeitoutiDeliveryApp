@@ -15,7 +15,7 @@ class CurrentDelivery extends Equatable {
   final String chefName;
 
   @JsonKey(name: 'total_cost')
-  final int totalCost;
+  final double totalCost;
 
   @JsonKey(name: 'total_meal_count')
   final int totalMealCount;

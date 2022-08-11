@@ -20,7 +20,7 @@ class Order extends Equatable {
   final int mealsCount;
 
   @JsonKey(name: 'total_cost')
-  final int totalCost;
+  final double totalCost;
 
   @JsonKey(name: 'has_notes')
   final bool? hasNotes; // will not be null if user inside current delivery page

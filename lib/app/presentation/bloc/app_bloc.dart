@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 import 'package:laravel_echo/laravel_echo.dart';
 import 'package:location/location.dart';
 import 'package:pusher_client/pusher_client.dart';
+
 import '../../../injection.dart';
 import 'app.dart';
 
@@ -75,9 +76,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
                 broadcaster: EchoBroadcasterType.Pusher,
                 client: pusherClient,
               );
-              echo.private('order.deliverymen').listen(
+              echo.channel('order.deliverymen').listen(
                 'OrderIsPrepared',
                 (_) async {
+                  // TODO check if online or offline
                   debugPrint('\n\nHere is an event 😍😍😍\n\n');
                   bool _serviceEnabled;
                   PermissionStatus _permissionGranted;
@@ -142,10 +144,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
                     broadcaster: EchoBroadcasterType.Pusher,
                     client: pusherClient,
                   );
-                  echo.private('deliveryman.$userId').listen(
+                  echo.channel('deliveryman.$userId').listen(
                     'DeliveryIsAssigned',
                     (_) async {
                       debugPrint('\n\nHere is an event ❤❤❤❤❤❤\n\n');
+                      // todo change status to unavailable locally
                       sl<CurrentDeliveryBloc>().addGetCurrentDeliveryEvent();
                     },
                   );
