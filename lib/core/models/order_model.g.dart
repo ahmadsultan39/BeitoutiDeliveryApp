@@ -11,7 +11,7 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
       userName: json['user_name'] as String,
       userPhoneNumber: json['user_phone_number'] as String,
       mealsCount: json['meals_count'] as int,
-      totalCost: json['total_cost'] as double,
+      totalCost: (json['total_cost'] as num).toDouble(),
       hasNotes: json['has_notes'] as bool?,
       status: $enumDecodeNullable(_$OrderStatusEnumMap, json['status']),
       meals: (json['meals'] as List<dynamic>?)

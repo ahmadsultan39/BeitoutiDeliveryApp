@@ -7,19 +7,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../features/auth/data/models/request_register_model.dart';
 
 class Endpoints {
-  static const baseUrl = "http://4183-46-213-207-239.ngrok.io/api/delivery";
-  static const imageUrl = "http://4183-46-213-207-239.ngrok.io";
-  static const socketUrl = "702a-46-213-207-239.ngrok.io";
-  static const authBroadcasting =
-      "http://4183-46-213-207-239.ngrok.io/api/broadcasting/auth";
+  static const url = "http://935f-94-47-182-14.ngrok.io";
+  static const socketUrl = "a7b9-94-47-182-14.ngrok.io";
+  static const baseUrl = "$url/api/delivery";
   static const sendCode = "/send-code";
+  static const logout = "/logout";
   static const checkCodeAndAccessibility = "/check-code-and-accessibility";
   static const requestRegister = "/request-register";
   static const updateCurrentLocation = "/update-current-location";
   static const currentDelivery = "/current-delivery";
   static const changeAvailabilityStatus = "/change-availability-status";
+  static const getBalance = "/balance";
 
   static String getOrder(int orderId) => "/current-delivery/orders/$orderId";
+
+  static String getOrderHistory(int page) => "/order-history?page=$page";
 
   static String changeOrderStatus(int orderId) =>
       "/current-delivery/orders/$orderId/change-status";
@@ -33,6 +35,7 @@ class SocketEndpoints {}
 class SharedPreferencesKeys {
   static String userId = 'user_id';
   static String apiToken = 'token';
+  static String availabilityStatus = 'availability_status';
   static String userName = 'user_name';
   static String userEmail = 'user_email';
   static String userPhoneNumber = 'user_phone_number';

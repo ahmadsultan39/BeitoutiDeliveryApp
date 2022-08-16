@@ -1,10 +1,12 @@
 import 'package:beitouti_delivery/core/util/constants.dart';
 import 'package:beitouti_delivery/core/util/enums.dart';
 import 'package:beitouti_delivery/core/widgets/custom_loader.dart';
+import 'package:beitouti_delivery/features/current_delivery/presentation/widgets/current_delivery_details.dart';
 import 'package:beitouti_delivery/features/order/presentation/bloc/order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../../injection.dart';
 
@@ -42,45 +44,112 @@ class _OrderPageState extends State<OrderPage> {
           },
         );
         return Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            title: const Text("تفاصيل الطلب"),
+          ),
           body: Stack(
             children: [
               if (state.order != null)
-                Center(
+                SingleChildScrollView(
                   child: Column(
                     children: [
-                      Text(state.order!.id.toString()),
-                      Text(state.order!.status.toString()),
-                      Text(state.order!.totalCost.toString()),
-                      Text(state.order!.meals!.toString()),
-                      Text(state.order!.hasNotes.toString()),
-                      Text(state.order!.mealsCount.toString()),
                       Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: 20.w,
                           vertical: 20.h,
                         ),
-                        child: GestureDetector(
-                          onTap: () {
-                            if (state.order!.status! == OrderStatus.prepared) {
-                              _bloc.addChangeOrderStatusEvent(
-                                orderId: widget.orderId,
-                                newStatus: OrderStatus.picked,
-                              );
-                            } else if (state.order!.status! ==
-                                OrderStatus.picked) {
-                              _bloc.addChangeOrderStatusEvent(
-                                orderId: widget.orderId,
-                                newStatus: OrderStatus.delivered,
-                              );
-                            }
-                          },
-                          child: Container(
-                            width: 200.w,
-                            height: 100.h,
-                            color: Colors.grey,
-                            child: const Center(
-                              child: Text("Change Order Status"),
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Theme.of(context).colorScheme.background,
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: Colors.grey,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 10)),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              children: [
+                                CurrentDeliveryDetails(
+                                  title: 'رقم الطلب',
+                                  icon: Icons.numbers,
+                                  value: state.order!.id.toString(),
+                                ),
+                                CurrentDeliveryDetails(
+                                  title: 'حالة الطلب',
+                                  icon: MdiIcons.listStatus,
+                                  value: orderStatusToMessage(
+                                      state.order!.status!),
+                                ),
+                                CurrentDeliveryDetails(
+                                  title: 'اسم الطالب',
+                                  icon: Icons.person,
+                                  value: state.order!.userName,
+                                ),
+                                CurrentDeliveryDetails(
+                                  title: 'رقم الطالب',
+                                  icon: Icons.phone,
+                                  value: state.order!.userPhoneNumber,
+                                ),
+                                CurrentDeliveryDetails(
+                                  title: 'الكلفة',
+                                  icon: MdiIcons.cash,
+                                  value: state.order!.totalCost
+                                          .round()
+                                          .toString() +
+                                      " ل.س",
+                                ),
+                                CurrentDeliveryDetails(
+                                  title: 'عدد الوجبات',
+                                  icon: MdiIcons.menu,
+                                  value: state.order!.mealsCount.toString(),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 10.h,
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                            if (state.order!.status! == OrderStatus.prepared) {
+                                              _bloc.addChangeOrderStatusEvent(
+                                                orderId: widget.orderId,
+                                                newStatus: OrderStatus.picked,
+                                              );
+                                            } else if (state.order!.status! ==
+                                                OrderStatus.picked) {
+                                              _bloc.addChangeOrderStatusEvent(
+                                                orderId: widget.orderId,
+                                                newStatus: OrderStatus.delivered,
+                                              );
+                                            }
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 45.h,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "تغيير حالة الطلب",
+                                          style: TextStyle(
+                                            fontSize: 15.sp,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -88,26 +157,117 @@ class _OrderPageState extends State<OrderPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: 20.w,
-                          vertical: 20.h,
+                          vertical: 10.h,
                         ),
-                        child: GestureDetector(
-                          onTap: () {
-                            _bloc.addReportOrderEvent(
-                              orderId: widget.orderId,
-                              reason: "reason",
-                              reportedOn: 'user',
-                            );
-                          },
-                          child: Container(
-                            width: 200.w,
-                            height: 100.h,
-                            color: Colors.grey,
-                            child: const Center(
-                              child: Text("Report Order"),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            "الوجبات",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.sp,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                         ),
                       ),
+                      ...state.order!.meals!.map(
+                        (meal) => Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10.h,
+                            horizontal: 20.w,
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Theme.of(context).colorScheme.background,
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 10,
+                                    offset: Offset(0, 10)),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                children: [
+                                  CurrentDeliveryDetails(
+                                    title: 'اسم الوجبة',
+                                    value: meal.name,
+                                  ),
+                                  CurrentDeliveryDetails(
+                                    title: 'السعر الإفرادي',
+                                    value: meal.price.toString() + ' ل.س',
+                                  ),
+                                  CurrentDeliveryDetails(
+                                    title: 'العدد',
+                                    value: meal.quantity.toString(),
+                                  ),
+                                  CurrentDeliveryDetails(
+                                    title: 'الملاحظات',
+                                    value: meal.notes ?? 'لا يوجد',
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(
+                      //     horizontal: 20.w,
+                      //     vertical: 20.h,
+                      //   ),
+                      //   child: GestureDetector(
+                      //     onTap: () {
+                      //       if (state.order!.status! == OrderStatus.prepared) {
+                      //         _bloc.addChangeOrderStatusEvent(
+                      //           orderId: widget.orderId,
+                      //           newStatus: OrderStatus.picked,
+                      //         );
+                      //       } else if (state.order!.status! ==
+                      //           OrderStatus.picked) {
+                      //         _bloc.addChangeOrderStatusEvent(
+                      //           orderId: widget.orderId,
+                      //           newStatus: OrderStatus.delivered,
+                      //         );
+                      //       }
+                      //     },
+                      //     child: Container(
+                      //       width: 200.w,
+                      //       height: 100.h,
+                      //       color: Colors.grey,
+                      //       child: const Center(
+                      //         child: Text("Change Order Status"),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(
+                      //     horizontal: 20.w,
+                      //     vertical: 20.h,
+                      //   ),
+                      //   child: GestureDetector(
+                      //     onTap: () {
+                      //       _bloc.addReportOrderEvent(
+                      //         orderId: widget.orderId,
+                      //         reason: "reason",
+                      //         reportedOn: 'user',
+                      //       );
+                      //     },
+                      //     child: Container(
+                      //       width: 200.w,
+                      //       height: 100.h,
+                      //       color: Colors.grey,
+                      //       child: const Center(
+                      //         child: Text("Report Order"),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

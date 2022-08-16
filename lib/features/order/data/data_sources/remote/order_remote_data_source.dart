@@ -3,7 +3,7 @@ import 'package:beitouti_delivery/core/models/order_model.dart';
 import 'package:beitouti_delivery/core/util/enums.dart';
 
 abstract class OrderRemoteDataSource extends BaseRemoteDataSource {
-  Future<OrderModel> getOrder({
+  Future<OrderModel?> getOrder({
     required String token,
     required int orderId,
   });

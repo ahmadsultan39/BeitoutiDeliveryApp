@@ -17,16 +17,16 @@ class AppRemoteDataSourceImp extends BaseRemoteDataSourceImpl
     required String token,
   }) async =>
       await performPostRequest<Null>(
-          endpoint: Endpoints.updateCurrentLocation,
-          options: GetOptions.getOptionsWithToken(token),
-          data: FormData.fromMap(
-            {
-              'current_longitude': longitude,
-              'current_latitude': latitude,
-            },
-          ),
-          queryParams: {
-            "_method": "PUT",
+        endpoint: Endpoints.updateCurrentLocation,
+        options: GetOptions.getOptionsWithToken(token),
+        data: FormData.fromMap(
+          {
+            'current_longitude': longitude,
+            'current_latitude': latitude,
           },
+        ),
+        queryParams: {
+          "_method": "PUT",
+        },
       );
 }

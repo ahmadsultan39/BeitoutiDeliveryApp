@@ -6,13 +6,13 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/usecase.dart';
 
 @lazySingleton
-class GetCurrentDeliveryUseCase implements UseCase<CurrentDelivery, NoParams> {
+class GetCurrentDeliveryUseCase implements UseCase<CurrentDelivery?, NoParams> {
   final CurrentDeliveryRepository _repository;
 
   GetCurrentDeliveryUseCase(this._repository);
 
   @override
-  Future<Either<Failure, CurrentDelivery>> call(NoParams params) {
+  Future<Either<Failure, CurrentDelivery?>> call(NoParams params) {
     return _repository.getCurrentDelivery();
   }
 }

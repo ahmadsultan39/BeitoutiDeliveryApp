@@ -6,62 +6,206 @@ part of 'home_event.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-class _$ChangeAvailabilityStatus extends ChangeAvailabilityStatus {
-  factory _$ChangeAvailabilityStatus(
-          [void Function(ChangeAvailabilityStatusBuilder)? updates]) =>
-      (new ChangeAvailabilityStatusBuilder()..update(updates))._build();
+class _$ChangeAvailabilityEvent extends ChangeAvailabilityEvent {
+  factory _$ChangeAvailabilityEvent(
+          [void Function(ChangeAvailabilityEventBuilder)? updates]) =>
+      (new ChangeAvailabilityEventBuilder()..update(updates))._build();
 
-  _$ChangeAvailabilityStatus._() : super._();
+  _$ChangeAvailabilityEvent._() : super._();
 
   @override
-  ChangeAvailabilityStatus rebuild(
-          void Function(ChangeAvailabilityStatusBuilder) updates) =>
+  ChangeAvailabilityEvent rebuild(
+          void Function(ChangeAvailabilityEventBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ChangeAvailabilityStatusBuilder toBuilder() =>
-      new ChangeAvailabilityStatusBuilder()..replace(this);
+  ChangeAvailabilityEventBuilder toBuilder() =>
+      new ChangeAvailabilityEventBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ChangeAvailabilityStatus;
+    return other is ChangeAvailabilityEvent;
   }
 
   @override
   int get hashCode {
-    return 48314286;
+    return 853716486;
   }
 
   @override
   String toString() {
-    return newBuiltValueToStringHelper('ChangeAvailabilityStatus').toString();
+    return newBuiltValueToStringHelper('ChangeAvailabilityEvent').toString();
   }
 }
 
-class ChangeAvailabilityStatusBuilder
+class ChangeAvailabilityEventBuilder
     implements
-        Builder<ChangeAvailabilityStatus, ChangeAvailabilityStatusBuilder> {
-  _$ChangeAvailabilityStatus? _$v;
+        Builder<ChangeAvailabilityEvent, ChangeAvailabilityEventBuilder> {
+  _$ChangeAvailabilityEvent? _$v;
 
-  ChangeAvailabilityStatusBuilder();
+  ChangeAvailabilityEventBuilder();
 
   @override
-  void replace(ChangeAvailabilityStatus other) {
+  void replace(ChangeAvailabilityEvent other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$ChangeAvailabilityStatus;
+    _$v = other as _$ChangeAvailabilityEvent;
   }
 
   @override
-  void update(void Function(ChangeAvailabilityStatusBuilder)? updates) {
+  void update(void Function(ChangeAvailabilityEventBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  ChangeAvailabilityStatus build() => _build();
+  ChangeAvailabilityEvent build() => _build();
 
-  _$ChangeAvailabilityStatus _build() {
-    final _$result = _$v ?? new _$ChangeAvailabilityStatus._();
+  _$ChangeAvailabilityEvent _build() {
+    final _$result = _$v ?? new _$ChangeAvailabilityEvent._();
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GetAvailabilityStatus extends GetAvailabilityStatus {
+  factory _$GetAvailabilityStatus(
+          [void Function(GetAvailabilityStatusBuilder)? updates]) =>
+      (new GetAvailabilityStatusBuilder()..update(updates))._build();
+
+  _$GetAvailabilityStatus._() : super._();
+
+  @override
+  GetAvailabilityStatus rebuild(
+          void Function(GetAvailabilityStatusBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GetAvailabilityStatusBuilder toBuilder() =>
+      new GetAvailabilityStatusBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GetAvailabilityStatus;
+  }
+
+  @override
+  int get hashCode {
+    return 43178691;
+  }
+
+  @override
+  String toString() {
+    return newBuiltValueToStringHelper('GetAvailabilityStatus').toString();
+  }
+}
+
+class GetAvailabilityStatusBuilder
+    implements Builder<GetAvailabilityStatus, GetAvailabilityStatusBuilder> {
+  _$GetAvailabilityStatus? _$v;
+
+  GetAvailabilityStatusBuilder();
+
+  @override
+  void replace(GetAvailabilityStatus other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GetAvailabilityStatus;
+  }
+
+  @override
+  void update(void Function(GetAvailabilityStatusBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GetAvailabilityStatus build() => _build();
+
+  _$GetAvailabilityStatus _build() {
+    final _$result = _$v ?? new _$GetAvailabilityStatus._();
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$SetAvailabilityStatus extends SetAvailabilityStatus {
+  @override
+  final bool status;
+
+  factory _$SetAvailabilityStatus(
+          [void Function(SetAvailabilityStatusBuilder)? updates]) =>
+      (new SetAvailabilityStatusBuilder()..update(updates))._build();
+
+  _$SetAvailabilityStatus._({required this.status}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        status, 'SetAvailabilityStatus', 'status');
+  }
+
+  @override
+  SetAvailabilityStatus rebuild(
+          void Function(SetAvailabilityStatusBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  SetAvailabilityStatusBuilder toBuilder() =>
+      new SetAvailabilityStatusBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is SetAvailabilityStatus && status == other.status;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, status.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('SetAvailabilityStatus')
+          ..add('status', status))
+        .toString();
+  }
+}
+
+class SetAvailabilityStatusBuilder
+    implements Builder<SetAvailabilityStatus, SetAvailabilityStatusBuilder> {
+  _$SetAvailabilityStatus? _$v;
+
+  bool? _status;
+  bool? get status => _$this._status;
+  set status(bool? status) => _$this._status = status;
+
+  SetAvailabilityStatusBuilder();
+
+  SetAvailabilityStatusBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _status = $v.status;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(SetAvailabilityStatus other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$SetAvailabilityStatus;
+  }
+
+  @override
+  void update(void Function(SetAvailabilityStatusBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  SetAvailabilityStatus build() => _build();
+
+  _$SetAvailabilityStatus _build() {
+    final _$result = _$v ??
+        new _$SetAvailabilityStatus._(
+            status: BuiltValueNullFieldError.checkNotNull(
+                status, 'SetAvailabilityStatus', 'status'));
     replace(_$result);
     return _$result;
   }

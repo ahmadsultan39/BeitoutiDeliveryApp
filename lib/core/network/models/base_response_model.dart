@@ -1,14 +1,17 @@
 library base_response_model;
 
 import 'package:beitouti_delivery/core/models/order_model.dart';
+import 'package:beitouti_delivery/core/network/models/paginate_response_model.dart';
 import 'package:beitouti_delivery/features/auth/data/models/user_model.dart';
 import 'package:beitouti_delivery/features/current_delivery/data/models/chef_location_model.dart';
 import 'package:beitouti_delivery/features/current_delivery/data/models/current_delivery_model.dart';
+import 'package:beitouti_delivery/features/profile/data/models/order_history_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../features/auth/data/models/accessibility_status_model.dart';
 import '../../../features/order/data/models/order_meal_model.dart';
+import '../../../features/profile/data/models/balance_model.dart';
+import '../../../features/profile/data/models/delivery_balance_model.dart';
 
 part 'base_response_model.g.dart';
 
@@ -52,6 +55,17 @@ T? _dataFromJson<T>(Object? data) {
   // OrderMealModel
   else if (T.toString() == OrderMealModel.className) {
     return OrderMealModel.fromJson(data as Map<String, dynamic>) as T;
+  }
+  // DeliveryBalanceModel
+  else if (T.toString() == DeliveryBalanceModel.className) {
+    return DeliveryBalanceModel.fromJson(data as Map<String, dynamic>) as T;
+  }
+  // BalanceModel
+  else if (T.toString() == BalanceModel.className) {
+    return BalanceModel.fromJson(data as Map<String, dynamic>) as T;
+  }
+  else if (T.toString() == OrderHistoryModel.paginateName) {
+    return PaginateResponseModel<OrderHistoryModel>.fromJson(data  as Map<String, dynamic>) as T;
   }
   // Null data
   else if (T.toString() == 'Null') {

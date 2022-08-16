@@ -28,7 +28,7 @@ class CurrentDeliveryRepositoryImp extends BaseRepositoryImpl
         );
 
   @override
-  Future<Either<Failure, CurrentDelivery>> getCurrentDelivery() async {
+  Future<Either<Failure, CurrentDelivery?>> getCurrentDelivery() async {
     try {
       final token = await _local.token;
       final currentDelivery = await _http.getCurrentDelivery(token: token);

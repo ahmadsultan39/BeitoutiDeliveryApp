@@ -19,6 +19,7 @@ class CurrentDeliveryModel extends CurrentDelivery {
     required int id,
     required String chefName,
     required String destination,
+    required String chefPhoneNumber,
     required String selectedDeliveryTime,
     required int totalMealCount,
     required double totalCost,
@@ -27,6 +28,7 @@ class CurrentDeliveryModel extends CurrentDelivery {
   }) : super(
           id: id,
           chefName: chefName,
+          chefPhoneNumber: chefPhoneNumber,
           chefLocation: chefLocation,
           destination: destination,
           selectedDeliveryTime: selectedDeliveryTime,

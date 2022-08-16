@@ -3,6 +3,7 @@ import 'package:beitouti_delivery/app/domain/use_cases/get_user_id_use_case.dart
 import 'package:beitouti_delivery/app/domain/use_cases/subscribe_to_prepared_order_channel_use_case.dart';
 import 'package:beitouti_delivery/core/usecase/usecase.dart';
 import 'package:beitouti_delivery/features/current_delivery/presentation/bloc/current_delivery_bloc.dart';
+import 'package:beitouti_delivery/features/home/presentation/bloc/home_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
@@ -55,7 +56,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           final getOptionsResult = await _getPusherOptionsUseCase(NoParams());
           getOptionsResult.fold(
             (failure) {
-              // TODO handle get options failure
               debugPrint("GetOptionsFailure");
             },
             (options) {
@@ -79,36 +79,39 @@ class AppBloc extends Bloc<AppEvent, AppState> {
               echo.channel('order.deliverymen').listen(
                 'OrderIsPrepared',
                 (_) async {
-                  // TODO check if online or offline
-                  debugPrint('\n\nHere is an event 😍😍😍\n\n');
-                  bool _serviceEnabled;
-                  PermissionStatus _permissionGranted;
+                  final currentStatus = sl<HomeBloc>().state.active;
+                  if (currentStatus) {
+                    debugPrint('\n\nHere is an event 😍😍😍\n\n');
+                    bool _serviceEnabled;
+                    PermissionStatus _permissionGranted;
 
-                  _serviceEnabled = await _location.serviceEnabled();
-                  if (!_serviceEnabled) {
-                    _serviceEnabled = await _location.requestService();
+                    _serviceEnabled = await _location.serviceEnabled();
                     if (!_serviceEnabled) {
-                      await _location.requestService();
+                      _serviceEnabled = await _location.requestService();
+                      if (!_serviceEnabled) {
+                        await _location.requestService();
+                      }
                     }
-                  }
 
-                  _permissionGranted = await _location.hasPermission();
-                  while (_permissionGranted == PermissionStatus.denied ||
-                      _permissionGranted == PermissionStatus.deniedForever) {
-                    _permissionGranted = await _location.requestPermission();
-                    if (_permissionGranted == PermissionStatus.granted ||
-                        _permissionGranted == PermissionStatus.grantedLimited) {
-                      break;
+                    _permissionGranted = await _location.hasPermission();
+                    while (_permissionGranted == PermissionStatus.denied ||
+                        _permissionGranted == PermissionStatus.deniedForever) {
+                      _permissionGranted = await _location.requestPermission();
+                      if (_permissionGranted == PermissionStatus.granted ||
+                          _permissionGranted ==
+                              PermissionStatus.grantedLimited) {
+                        break;
+                      }
                     }
-                  }
 
-                  final locationData = await _location.getLocation();
-                  await _updateCurrentLocationUseCase(
-                    ParamsUpdateCurrentLocationUseCase(
-                      longitude: locationData.longitude!,
-                      latitude: locationData.latitude!,
-                    ),
-                  );
+                    final locationData = await _location.getLocation();
+                    await _updateCurrentLocationUseCase(
+                      ParamsUpdateCurrentLocationUseCase(
+                        longitude: locationData.longitude!,
+                        latitude: locationData.latitude!,
+                      ),
+                    );
+                  }
                 },
               );
             },
@@ -120,7 +123,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           final getUserIdResult = await _getUserIdUseCase(NoParams());
           getOptionsResult.fold(
             (failure) {
-              // TODO handle get options failure
               debugPrint("GetOptionsFailure");
             },
             (options) {
@@ -148,7 +150,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
                     'DeliveryIsAssigned',
                     (_) async {
                       debugPrint('\n\nHere is an event ❤❤❤❤❤❤\n\n');
-                      // todo change status to unavailable locally
+                      sl<HomeBloc>().addSetAvailabilityEvent(false);
                       sl<CurrentDeliveryBloc>().addGetCurrentDeliveryEvent();
                     },
                   );

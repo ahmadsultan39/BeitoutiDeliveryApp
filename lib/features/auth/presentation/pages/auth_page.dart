@@ -140,7 +140,11 @@ class _AuthPageState extends State<AuthPage> {
                   AccessibilityStaysType.approved) {
                 WidgetsBinding.instance?.addPostFrameCallback(
                   (_) {
-                    Navigator.pushNamed(context, NameScreen.homeScreen);
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      NameScreen.homeScreen,
+                      (_) => false,
+                    );
                   },
                 );
               }

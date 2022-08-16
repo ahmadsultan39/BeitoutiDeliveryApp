@@ -32,7 +32,7 @@ class _SplashPageState extends State<SplashPage> {
           if (state.isAuth!) {
             WidgetsBinding.instance?.addPostFrameCallback(
               (_) {
-                Navigator.pushReplacementNamed(context, NameScreen.homeScreen);
+                Navigator.pushNamedAndRemoveUntil(context, NameScreen.homeScreen,(_) => false);
               },
             );
           } else {

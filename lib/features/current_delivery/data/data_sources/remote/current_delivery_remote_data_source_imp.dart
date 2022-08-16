@@ -11,11 +11,11 @@ class CurrentDeliveryRemoteDataSourceImp extends BaseRemoteDataSourceImpl
   CurrentDeliveryRemoteDataSourceImp({required Dio dio}) : super(dio: dio);
 
   @override
-  Future<CurrentDeliveryModel> getCurrentDelivery({
+  Future<CurrentDeliveryModel?> getCurrentDelivery({
     required String token,
   }) async =>
       await performGetRequest<CurrentDeliveryModel>(
-        Endpoints.currentDelivery,
-        token,
+        endpoint: Endpoints.currentDelivery,
+        token: token,
       );
 }

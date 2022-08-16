@@ -4,5 +4,5 @@ import 'package:beitouti_delivery/features/current_delivery/domain/entities/curr
 import 'package:dartz/dartz.dart';
 
 abstract class CurrentDeliveryRepository extends BaseRepository {
-  Future<Either<Failure, CurrentDelivery>> getCurrentDelivery();
+  Future<Either<Failure, CurrentDelivery?>> getCurrentDelivery();
 }

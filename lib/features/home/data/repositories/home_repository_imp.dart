@@ -25,13 +25,36 @@ class HomeRepositoryImp extends BaseRepositoryImpl implements HomeRepository {
         );
 
   @override
-  Future<Either<Failure, void>> changeAvailabilityStatus() async {
+  Future<Either<Failure, void>> changeAvailability(bool currentStatus) async {
     try {
       final token = await _local.token;
-      await _http.changeAvailabilityStatus(token: token);
+      await _http.changeAvailability(token: token);
+      await baseLocalDataSource.setStatus(!currentStatus);
       return const Right(null);
     } on HandledException catch (e) {
       return Left(ServerFailure(error: e.error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> getAvailabilityStatus() async {
+    try {
+      final status = baseLocalDataSource.status;
+      print(status);
+      print('*****************************************');
+      return Right(status);
+    } catch (e) {
+      return const Left(CacheFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> setAvailabilityStatus(bool status) async {
+    try {
+      await baseLocalDataSource.setStatus(status);
+      return const Right(null);
+    } catch (e) {
+      return const Left(CacheFailure());
     }
   }
 }

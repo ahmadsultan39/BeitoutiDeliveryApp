@@ -6,7 +6,7 @@ import 'package:beitouti_delivery/core/entities/order.dart' as order;
 import 'package:dartz/dartz.dart';
 
 abstract class OrderRepository extends BaseRepository {
-  Future<Either<Failure, order.Order>> getOrder({
+  Future<Either<Failure, order.Order?>> getOrder({
     required int orderId,
   });
 

@@ -22,8 +22,7 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-    _bloc.addSubscribeToOrderIsPreparedChannelEvent();
-    _bloc.addSubscribeToOrderIsAssignedChannelEvent();
+
     super.initState();
   }
 

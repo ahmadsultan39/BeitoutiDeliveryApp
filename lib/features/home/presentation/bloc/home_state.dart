@@ -9,16 +9,19 @@ abstract class HomeState implements Built<HomeState, HomeStateBuilder> {
 
   bool get error;
 
+  bool get active;
+
   HomeState._();
 
   factory HomeState([Function(HomeStateBuilder b) updates]) = _$HomeState;
 
   factory HomeState.initial() {
     return HomeState(
-      (b) => b
+          (b) => b
+        ..active = false
         ..isLoading = false
-        ..message = ""
-        ..error = false,
+        ..error = false
+        ..message = "",
     );
   }
 }

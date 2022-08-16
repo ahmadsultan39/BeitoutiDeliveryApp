@@ -1,5 +1,6 @@
 library paginate_response_model;
 
+import 'package:beitouti_delivery/features/profile/data/models/order_history_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -40,17 +41,10 @@ class _Converter<T> implements JsonConverter<T, Object?> {
   @override
   T fromJson(Object? json) {
     debugPrint('T is ${T.toString()}');
-    // if (json is Map<String, dynamic> &&
-    //     T.toString() == HomeMealModel.className) {
-    //   return HomeMealModel.fromJson(json) as T;
-    // }
-    // if (json is Map<String, dynamic> &&
-    //     T.toString() == HomeSubscribeModel.className) {
-    //   return HomeSubscribeModel.fromJson(json) as T;
-    // }
-    // if (json is Map<String, dynamic> && T.toString() == OrderModel.className) {
-    //   return OrderModel.fromJson(json) as T;
-    // }
+    if (json is Map<String, dynamic> &&
+        T.toString() == OrderHistoryModel.className) {
+      return OrderHistoryModel.fromJson(json) as T;
+    }
     return json as T;
   }
 

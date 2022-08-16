@@ -11,15 +11,14 @@ class HomeRemoteDataSourceImp extends BaseRemoteDataSourceImpl
   HomeRemoteDataSourceImp({required Dio dio}) : super(dio: dio);
 
   @override
-  Future<void> changeAvailabilityStatus({
+  Future<void> changeAvailability({
     required String token,
-  }) async =>
-      await performPostRequest(
+  }) =>
+      performPostRequest<Null>(
         endpoint: Endpoints.changeAvailabilityStatus,
-        data: null,
         options: GetOptions.getOptionsWithToken(token),
         queryParams: {
-          "_method": "PUT",
+          '_method': 'PUT',
         },
       );
 }

@@ -14,6 +14,9 @@ class CurrentDelivery extends Equatable {
   @JsonKey(name: 'chef_name')
   final String chefName;
 
+  @JsonKey(name: 'chef_phone_number')
+  final String chefPhoneNumber;
+
   @JsonKey(name: 'total_cost')
   final double totalCost;
 
@@ -34,6 +37,7 @@ class CurrentDelivery extends Equatable {
     required this.selectedDeliveryTime,
     required this.totalMealCount,
     required this.totalCost,
+    required this.chefPhoneNumber,
     required this.orders,
   });
 

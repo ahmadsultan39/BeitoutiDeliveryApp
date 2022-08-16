@@ -45,7 +45,7 @@ class OrderRepositoryImp extends BaseRepositoryImpl implements OrderRepository {
   }
 
   @override
-  Future<Either<Failure, order.Order>> getOrder({
+  Future<Either<Failure, order.Order?>> getOrder({
     required int orderId,
   }) async {
     try {

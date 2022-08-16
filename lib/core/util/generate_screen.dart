@@ -1,9 +1,11 @@
 import 'package:beitouti_delivery/features/current_delivery/presentation/pages/current_delivery_page.dart';
 import 'package:beitouti_delivery/features/home/presentation/pages/home_page.dart';
 import 'package:beitouti_delivery/features/order/presentation/pages/order_page.dart';
+import 'package:beitouti_delivery/features/profile/presentation/pages/delivery_balance_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/auth/presentation/pages/auth_page.dart';
+import '../../features/profile/presentation/pages/order_history_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 
 class GenerateScreen {
@@ -41,6 +43,18 @@ class GenerateScreen {
             builder: (_) => OrderPage(orderId: value.arguments as int),
           );
         }
+      case NameScreen.balanceScreen:
+        {
+          return MaterialPageRoute(
+            builder: (_) => const DeliveryBalancePage(),
+          );
+        }
+      case NameScreen.ordersHistory:
+        {
+          return MaterialPageRoute(
+            builder: (_) => const OrderHistoryPage(),
+          );
+        }
       default:
         return _errorRoute();
     }
@@ -68,4 +82,6 @@ class NameScreen {
   static const String homeScreen = "/home";
   static const String currentDeliveryScreen = "/current-delivery";
   static const String orderScreen = "/order";
+  static const String balanceScreen = "/balance";
+  static const String ordersHistory = "/orders-history";
 }

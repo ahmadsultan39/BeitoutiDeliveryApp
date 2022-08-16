@@ -27,13 +27,13 @@ class OrderRemoteDataSourceImp extends BaseRemoteDataSourceImpl
       );
 
   @override
-  Future<OrderModel> getOrder({
+  Future<OrderModel?> getOrder({
     required String token,
     required int orderId,
   }) async =>
       await performGetRequest<OrderModel>(
-        Endpoints.getOrder(orderId),
-        token,
+        endpoint: Endpoints.getOrder(orderId),
+        token: token,
       );
 
   @override

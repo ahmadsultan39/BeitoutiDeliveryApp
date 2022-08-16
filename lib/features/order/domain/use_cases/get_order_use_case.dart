@@ -7,13 +7,13 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/usecase.dart';
 
 @lazySingleton
-class GetOrderUseCase implements UseCase<order.Order, ParamsGetOrderUseCase> {
+class GetOrderUseCase implements UseCase<order.Order?, ParamsGetOrderUseCase> {
   final OrderRepository _repository;
 
   GetOrderUseCase(this._repository);
 
   @override
-  Future<Either<Failure, order.Order>> call(ParamsGetOrderUseCase params) {
+  Future<Either<Failure, order.Order?>> call(ParamsGetOrderUseCase params) {
     return _repository.getOrder(orderId: params.orderId);
   }
 }

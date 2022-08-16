@@ -49,7 +49,7 @@ class AppRepositoryImp extends BaseRepositoryImpl implements AppRepository {
   Future<Either<Failure, PusherOptions>> getPusherOptions() async {
     try {
       final PusherOptions options = PusherOptions(
-        host: '702a-46-213-207-239.ngrok.io',
+        host: Endpoints.socketUrl,
       );
       return Right(options);
     } catch (e) {
