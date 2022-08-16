@@ -32,12 +32,16 @@ class AuthRepositoryImp implements AuthRepository {
   Future<Either<Failure, AccessibilityStatus>> checkCode(
       {required String phoneNumber, required String code}) async {
     try {
-      String? fcmToken = await FirebaseMessaging.instance.getToken();
-      fcmToken = fcmToken ?? "" ;
+      String? fcmToken;
+      try {
+        fcmToken = await FirebaseMessaging.instance.getToken();
+      } catch (e) {
+        print('Error while getting fcm token');
+      }
       final accessibilityStatus = await _http.checkCodeAndAccessibility(
         phoneNumber: phoneNumber,
         code: code,
-        fcmToken: fcmToken,
+        fcmToken: fcmToken ?? "",
       );
       if (accessibilityStatus.status == AccessibilityStaysType.approved) {
         _local.saveUser(accessibilityStatus.userModel!);
@@ -52,8 +56,12 @@ class AuthRepositoryImp implements AuthRepository {
   Future<Either<Failure, void>> requestRegister(
       {required RegisterRequest request}) async {
     try {
-      String? fcmToken = await FirebaseMessaging.instance.getToken();
-      fcmToken = fcmToken ?? "" ;
+      String? fcmToken;
+      try {
+        fcmToken = await FirebaseMessaging.instance.getToken();
+      } catch (e) {
+        print('Error while getting fcm token');
+      }
       await _http.requestRegister(
         request: RegisterRequestModel(
           name: request.name,
@@ -66,7 +74,7 @@ class AuthRepositoryImp implements AuthRepository {
           workDays: request.workDays,
           transportationTypeIndex: request.transportationType.index,
         ),
-        fcmToken : fcmToken,
+        fcmToken : fcmToken ?? "",
       );
       return const Right(null);
     } on ServerException catch (e) {
