@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
@@ -31,9 +32,12 @@ class AuthRepositoryImp implements AuthRepository {
   Future<Either<Failure, AccessibilityStatus>> checkCode(
       {required String phoneNumber, required String code}) async {
     try {
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      fcmToken = fcmToken ?? "" ;
       final accessibilityStatus = await _http.checkCodeAndAccessibility(
         phoneNumber: phoneNumber,
         code: code,
+        fcmToken: fcmToken,
       );
       if (accessibilityStatus.status == AccessibilityStaysType.approved) {
         _local.saveUser(accessibilityStatus.userModel!);
@@ -48,6 +52,8 @@ class AuthRepositoryImp implements AuthRepository {
   Future<Either<Failure, void>> requestRegister(
       {required RegisterRequest request}) async {
     try {
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      fcmToken = fcmToken ?? "" ;
       await _http.requestRegister(
         request: RegisterRequestModel(
           name: request.name,
@@ -60,6 +66,7 @@ class AuthRepositoryImp implements AuthRepository {
           workDays: request.workDays,
           transportationTypeIndex: request.transportationType.index,
         ),
+        fcmToken : fcmToken,
       );
       return const Right(null);
     } on ServerException catch (e) {

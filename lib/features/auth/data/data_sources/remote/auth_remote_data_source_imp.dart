@@ -20,9 +20,10 @@ class AuthRemoteDataSourceImp extends BaseRemoteDataSourceImpl
   Future<AccessibilityStatusModel> checkCodeAndAccessibility({
     required String phoneNumber,
     required String code,
+    required String fcmToken,
   }) async {
-    final formData =
-    RequestBody.checkCode(phoneNumber: phoneNumber, code: code);
+    final formData = RequestBody.checkCode(
+        phoneNumber: phoneNumber, code: code, fcmToken: fcmToken);
 
     try {
       final response = await dio.post(
@@ -32,7 +33,7 @@ class AuthRemoteDataSourceImp extends BaseRemoteDataSourceImpl
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         final result =
-        BaseResponseModel<UserModel>.fromJson(json.decode(response.data));
+            BaseResponseModel<UserModel>.fromJson(json.decode(response.data));
         return AccessibilityStatusModel(
             accessibilityStatus: result.status!, userModel: result.data);
       } else {
@@ -40,8 +41,8 @@ class AuthRemoteDataSourceImp extends BaseRemoteDataSourceImpl
       }
     } on DioError catch (e) {
       final result =
-      BaseResponseModel<Null>.fromJson(json.decode(e.response!.data));
-      if(result.status! == 3){
+          BaseResponseModel<Null>.fromJson(json.decode(e.response!.data));
+      if (result.status! == 3) {
         throw ServerException(error: result.errors!);
       }
       return AccessibilityStatusModel(
@@ -50,8 +51,11 @@ class AuthRemoteDataSourceImp extends BaseRemoteDataSourceImpl
   }
 
   @override
-  Future<void> requestRegister({required RegisterRequestModel request}) async {
-    final formData = RequestBody.requestRegister(request: request);
+  Future<void> requestRegister({
+    required RegisterRequestModel request,
+    required String fcmToken,
+  }) async {
+    final formData = RequestBody.requestRegister(request: request,fcmToken : fcmToken);
     print(formData.fields);
     try {
       final response = await dio.post(

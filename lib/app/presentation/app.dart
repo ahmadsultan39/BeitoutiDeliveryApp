@@ -12,6 +12,7 @@ import 'bloc/app.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   State<App> createState() => _AppState();
@@ -45,8 +46,9 @@ class _AppState extends State<App> {
         );
         return ScreenUtilInit(
           designSize: const Size(375, 812),
-          builder: (_) {
+          builder: (context,child) {
             return MaterialApp(
+              navigatorKey: App.navigatorKey,
               title: 'Beitouti',
               debugShowCheckedModeBanner: false,
               onGenerateRoute: GenerateScreen.onGenerate,

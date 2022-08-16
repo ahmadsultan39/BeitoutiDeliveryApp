@@ -97,16 +97,19 @@ class RequestBody {
   static FormData checkCode({
     required String phoneNumber,
     required String code,
+    required String fcmToken,
   }) {
     return FormData.fromMap({
       'phone_number': phoneNumber,
       'code': code,
+      'fcm_token': fcmToken,
     });
   }
 
   // Request Register
   static FormData requestRegister({
     required RegisterRequestModel request,
+    required String fcmToken,
   }) {
     return FormData.fromMap({
       'phone_number': request.phoneNumber,
@@ -118,6 +121,7 @@ class RequestBody {
       'work_hours_from': request.workHoursFrom,
       'work_hours_to': request.workHoursTo,
       'work_days': request.workDays,
+      'fcm_token': fcmToken,
     });
   }
 }
