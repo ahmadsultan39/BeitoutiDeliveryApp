@@ -386,7 +386,7 @@ class CustomExpansionTileState extends State<CustomExpansionTile>
     return Padding(
       padding: EdgeInsets.only(
         top: 15.h,
-        bottom: 30.h,
+        bottom: 15.h,
       ),
       child: Container(
         height: !_isExpanded ? 40.h : null,

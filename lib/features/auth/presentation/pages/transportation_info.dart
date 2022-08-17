@@ -25,7 +25,7 @@ class TransportationInfo extends StatefulWidget {
 }
 
 class _TransportationInfoState extends State<TransportationInfo> {
-  final RegExp _validNumberExp = RegExp(r'[0-9]$');
+  String _pickDateErrorMessage = '';
 
   // TransportationType
   final List<String> _transportationTypes = [
@@ -34,8 +34,10 @@ class _TransportationInfoState extends State<TransportationInfo> {
     'دراجة نارية',
     'سيارة',
   ];
-  bool _isTransportationTypeChanged = false;
+  bool _isTransportationTypeChanged = true;
+
   String _transportationType = 'الرجاء إختيار نوع المركبة';
+
   final GlobalKey<CustomExpansionTileState> _transportationKey = GlobalKey();
 
   // TransportationType
@@ -43,7 +45,7 @@ class _TransportationInfoState extends State<TransportationInfo> {
     'ذكر',
     'أنثى',
   ];
-  bool _isGenderChanged = false;
+  bool _isGenderChanged = true;
   String _gender = 'الرجاء اختيار الجنس';
   final GlobalKey<CustomExpansionTileState> _genderKey = GlobalKey();
 
@@ -52,16 +54,39 @@ class _TransportationInfoState extends State<TransportationInfo> {
     return PageViewItem(
       buttonText: "التالي",
       onPressed: () {
-        if (_isTransportationTypeChanged &&
+        if (_transportationType != 'الرجاء إختيار نوع المركبة' &&
+            _transportationType != 'الرجاء اختيار الجنس' &&
             widget.birthDateTextController.text.isNotEmpty) {
           widget.onPressed();
+        } else {
+          if (_transportationType == 'الرجاء إختيار نوع المركبة') {
+            setState(() {
+              _isTransportationTypeChanged = false;
+            });
+          }
+          if (_gender == 'الرجاء اختيار الجنس') {
+            setState(() {
+              _isGenderChanged = false;
+            });
+          }
+          if (widget.birthDateTextController.text.isEmpty) {
+            setState(() {
+              _pickDateErrorMessage = 'الرجاء اختيار تاريخ الميلاد';
+            });
+          }
         }
       },
       children: [
         FormEntity(
           controller: widget.birthDateTextController,
-          onChanged: (text) {},
-          error: '',
+          onChanged: (text) {
+            if (text.isNotEmpty) {
+              setState(() {
+                _pickDateErrorMessage = '';
+              });
+            }
+          },
+          error: _pickDateErrorMessage,
           onTap: () async {
             final date = await showDatePicker(
               context: context,
@@ -79,7 +104,7 @@ class _TransportationInfoState extends State<TransportationInfo> {
           prefixIcon: Icons.date_range_rounded,
           enabled: false,
           upperLabel: "تاريخ الميلاد",
-          isInputTextValid: true,
+          isInputTextValid: widget.birthDateTextController.text.isNotEmpty,
           height: 40.h,
           contentPadding: EdgeInsets.symmetric(
             horizontal: 10.w,
@@ -197,7 +222,7 @@ class _TransportationInfoState extends State<TransportationInfo> {
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                              vertical: 5.h,
+                              vertical: 0.h,
                             ),
                             child: Text(
                               gender,
@@ -239,9 +264,6 @@ class _TransportationInfoState extends State<TransportationInfo> {
               ),
             ],
           ),
-        ),
-        SizedBox(
-          height: 200.h,
         ),
       ],
     );

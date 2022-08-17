@@ -4,6 +4,7 @@ import 'package:beitouti_delivery/features/auth/presentation/pages/work_info_pag
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../core/util/constants.dart';
 import '../../../../core/util/enums.dart';
 import '../../../../core/widgets/custom_dialog.dart';
@@ -71,6 +72,17 @@ class _AuthPageState extends State<AuthPage> {
     super.initState();
   }
 
+  void _reInitControllers() {
+    _phoneNumberTextController.clear();
+    _pinCodeTextController.clear();
+    _nameTextController.clear();
+    _emailTextController.clear();
+    _workDaysTextController.clear();
+    _birthDateController.clear();
+    _workHourFromTextController.clear();
+    _workHourToTextController.clear();
+  }
+
   void _goToNextPage() {
     setState(() {
       _pageController.nextPage(
@@ -124,161 +136,204 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: BlocListener<AuthBloc, AuthState>(
-          bloc: _bloc,
-          listener: (context, state) {
-            if (state.isCodeSent && _pageController.page == 0.0) {
-              // Code now is sent and we are waiting for message
-              _goToNextPage();
-            }
-            if (state.isCodeValid && _pageController.page == 1.0) {
-              // Code is right, Now we must check accessibility status
-              if (state.accessibilityStaysType ==
-                  AccessibilityStaysType.approved) {
+      child: WillPopScope(
+        onWillPop: () async {
+          if (_pageController.page == 1.0) {
+            _pageController.previousPage(
+              duration: _duration,
+              curve: _curve,
+            );
+            _bloc.reInitializeState();
+            _pinCodeTextController.clear();
+            return false;
+          }
+          return true;
+        },
+        child: Scaffold(
+          backgroundColor: Theme.of(context).backgroundColor,
+          body: BlocListener<AuthBloc, AuthState>(
+            bloc: _bloc,
+            listener: (context, state) {
+              if (state.isCodeSent && _pageController.page == 0.0) {
+                // Code now is sent and we are waiting for message
+                _goToNextPage();
+              }
+              if (state.isCodeValid && _pageController.page == 1.0) {
+                // Code is right, Now we must check accessibility status
+                if (state.accessibilityStaysType ==
+                    AccessibilityStaysType.approved) {
+                  WidgetsBinding.instance?.addPostFrameCallback(
+                    (_) {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        NameScreen.homeScreen,
+                        (_) => false,
+                      );
+                    },
+                  );
+                }
+                if (state.accessibilityStaysType ==
+                    AccessibilityStaysType.blocked) {
+                  showDialog(
+                    context: context,
+                    builder: (_) => CustomDialog(
+                      content: 'عذرا،\n هذا الحساب محظور',
+                      title: Icon(
+                        Icons.block_outlined,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 35.sp,
+                      ),
+                    ),
+                  );
+                  _pageController.animateTo(
+                    0,
+                    duration: _duration,
+                    curve: _curve,
+                  );
+                  _bloc.reInitializeState();
+                  _reInitControllers();
+                }
+                if (state.accessibilityStaysType ==
+                    AccessibilityStaysType.isRejected) {
+                  showDialog(
+                    context: context,
+                    builder: (_) => CustomDialog(
+                      content: 'عذراً،\nلقد تم رفض طلب انضمامك',
+                      title: Icon(
+                        Icons.no_accounts,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 35.sp,
+                      ),
+                    ),
+                  );
+                  _pageController.animateTo(
+                    0,
+                    duration: _duration,
+                    curve: _curve,
+                  );
+                  _bloc.reInitializeState();
+                  _reInitControllers();
+                }
+                if (state.accessibilityStaysType ==
+                    AccessibilityStaysType.notApproved) {
+                  showDialog(
+                    context: context,
+                    builder: (_) => CustomDialog(
+                      content: 'عذراً،\n طلب انضمامك قيد المراجعة حالياً',
+                      title: Icon(
+                        Icons.lock_clock,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 35.sp,
+                      ),
+                    ),
+                  );
+                  _pageController.animateTo(
+                    0,
+                    duration: _duration,
+                    curve: _curve,
+                  );
+                  _bloc.reInitializeState();
+                  _reInitControllers();
+                }
+                if (state.accessibilityStaysType ==
+                    AccessibilityStaysType.notRegistered) {
+                  // Navigator to next page;
+                  _goToNextPage();
+                }
+              }
+              if (state.isRegisterRequestSent) {
+                showDialog(
+                  context: context,
+                  builder: (_) => CustomDialog(
+                    content: 'تم إرسال الطلب بنجاح',
+                    title: Icon(
+                      Icons.done_outline_rounded,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 35.sp,
+                    ),
+                  ),
+                );
+                _pageController.animateTo(
+                  0,
+                  duration: _duration,
+                  curve: _curve,
+                );
+                _bloc.reInitializeState();
+                _reInitControllers();
+              }
+            },
+            child: BlocBuilder<AuthBloc, AuthState>(
+              bloc: _bloc,
+              builder: (context, state) {
                 WidgetsBinding.instance?.addPostFrameCallback(
                   (_) {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      NameScreen.homeScreen,
-                      (_) => false,
+                    message(
+                      message: state.message,
+                      isError: state.error,
+                      context: context,
+                      bloc: _bloc,
                     );
                   },
                 );
-              }
-              if (state.accessibilityStaysType ==
-                  AccessibilityStaysType.blocked) {
-                showDialog(
-                  context: context,
-                  builder: (_) => CustomDialog(
-                    content: 'عزيزي الطالب،\n هذا الحساب محظور',
-                    title: Icon(
-                      Icons.block_outlined,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 35.sp,
-                    ),
-                  ),
-                );
-              }
-              // if (state.accessibilityStaysType ==
-              //     AccessibilityStaysType.inActive) {
-              //   // Show inactive dialog and request for register again;
-              // }
-              if (state.accessibilityStaysType ==
-                  AccessibilityStaysType.isRejected) {
-                showDialog(
-                  context: context,
-                  builder: (_) => CustomDialog(
-                    content: 'عزيزي الطالب،\n طلب انضمامك قيد المراجعة حالياً',
-                    title: Icon(
-                      Icons.no_accounts,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 35.sp,
-                    ),
-                  ),
-                );
-              }
-              if (state.accessibilityStaysType ==
-                  AccessibilityStaysType.notApproved) {
-                showDialog(
-                  context: context,
-                  builder: (_) => CustomDialog(
-                    content: 'عزيزي الطالب،\n طلب انضمامك قيد المراجعة حالياً',
-                    title: Icon(
-                      Icons.lock_clock,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 35.sp,
-                    ),
-                  ),
-                );
-              }
-              if (state.accessibilityStaysType ==
-                  AccessibilityStaysType.notRegistered) {
-                // Navigator to next page;
-                _goToNextPage();
-              }
-            }
-            if (state.isRegisterRequestSent) {
-              _bloc.reInitializeState();
-              setState(
-                () {
-                  _pageController.jumpToPage(0);
-                },
-              );
-            }
-          },
-          child: BlocBuilder<AuthBloc, AuthState>(
-            bloc: _bloc,
-            builder: (context, state) {
-              WidgetsBinding.instance?.addPostFrameCallback(
-                (_) {
-                  message(
-                    message: state.message,
-                    isError: state.error,
-                    context: context,
-                    bloc: _bloc,
-                  );
-                },
-              );
-              return Stack(
-                alignment: Alignment.center,
-                children: [
-                  const Decor(),
-                  const BeitoutiText(),
-                  Positioned(
-                    top: 220.h,
-                    child: SizedBox(
-                      height: 500.h,
-                      width: 375.w,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 25.w,
-                        ),
-                        child: PageView(
-                          controller: _pageController,
-                          physics: const NeverScrollableScrollPhysics(),
-                          reverse: true, //Because arabic is from right to left
-                          children: [
-                            PhoneNumberPage(
-                              phoneNumberTextController:
-                                  _phoneNumberTextController,
-                              onPressed: _sendCode, //_sendCode,
-                            ),
-                            ConfirmPhoneNumberPage(
-                              pinCodeTextController: _pinCodeTextController,
-                              onPressed: _checkCodeAndAccessibility,
-                            ),
-                            NameAndEmailPage(
-                              nameTextController: _nameTextController,
-                              emailTextController: _emailTextController,
-                              onPressed: _goToNextPage,
-                            ),
-                            TransportationInfo(
-                              birthDateTextController: _birthDateController,
-                              transportationTypeController:
-                                  _setTransportationType,
-                              genderController: _setGender,
-                              onPressed: _goToNextPage,
-                            ),
-                            WorkInfoPage(
-                              workDaysTextController: _workDaysTextController,
-                              workHourFromTextController:
-                                  _workHourFromTextController,
-                              workHourToTextController:
-                                  _workHourToTextController,
-                              onPressed: _requestRegister,
-                            ),
-                          ],
+                return Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    const Decor(),
+                    const BeitoutiText(),
+                    Positioned(
+                      top: 240.h,
+                      child: SizedBox(
+                        height: 500.h,
+                        width: 375.w,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 25.w,
+                          ),
+                          child: PageView(
+                            controller: _pageController,
+                            physics: const NeverScrollableScrollPhysics(),
+                            reverse: true,
+                            //Because arabic is from right to left
+                            children: [
+                              PhoneNumberPage(
+                                phoneNumberTextController:
+                                    _phoneNumberTextController,
+                                onPressed: _sendCode,
+                              ),
+                              ConfirmPhoneNumberPage(
+                                pinCodeTextController: _pinCodeTextController,
+                                onPressed: _checkCodeAndAccessibility,
+                              ),
+                              NameAndEmailPage(
+                                nameTextController: _nameTextController,
+                                emailTextController: _emailTextController,
+                                onPressed: _goToNextPage,
+                              ),
+                              TransportationInfo(
+                                birthDateTextController: _birthDateController,
+                                transportationTypeController:
+                                    _setTransportationType,
+                                genderController: _setGender,
+                                onPressed: _goToNextPage,
+                              ),
+                              WorkInfoPage(
+                                workDaysTextController: _workDaysTextController,
+                                workHourFromTextController:
+                                    _workHourFromTextController,
+                                workHourToTextController:
+                                    _workHourToTextController,
+                                onPressed: _requestRegister,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  if (state.isLoading) const Loader(),
-                ],
-              );
-            },
+                    if (state.isLoading) const Loader(),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

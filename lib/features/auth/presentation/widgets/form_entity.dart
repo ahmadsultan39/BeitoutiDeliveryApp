@@ -8,6 +8,7 @@ class FormEntity extends StatelessWidget {
   final Function(String)? onChanged;
   final String? error;
   final bool? isInputTextValid;
+  final FocusNode? node;
 
   final String upperLabel;
 
@@ -30,6 +31,7 @@ class FormEntity extends StatelessWidget {
   final EdgeInsets? contentPadding;
   final bool? enabled;
   final VoidCallback? onTap;
+  final TextInputAction? action;
   final Widget? child;
 
   const FormEntity({
@@ -37,6 +39,8 @@ class FormEntity extends StatelessWidget {
     this.controller,
     this.onChanged,
     this.error,
+    this.node,
+    this.action,
     required this.upperLabel,
     this.isInputTextValid,
     this.contentPadding,
@@ -76,6 +80,8 @@ class FormEntity extends StatelessWidget {
         ),
         child ??
             DecoratedTextField(
+              action: action,
+              node: node,
               enabled: enabled,
               onTap: onTap,
               contentPadding: contentPadding,

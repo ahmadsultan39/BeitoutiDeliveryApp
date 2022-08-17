@@ -25,6 +25,9 @@ class _NameAndEmailPageState extends State<NameAndEmailPage> {
   bool _isNameTextValid = false;
   String _nameErrorMessage = '';
 
+  final FocusNode _nameNode = FocusNode();
+  final FocusNode _emailNode = FocusNode();
+
   void _nameValidation(String name) {
     if (name.isEmpty) {
       setState(() {
@@ -81,6 +84,8 @@ class _NameAndEmailPageState extends State<NameAndEmailPage> {
       },
       children: [
         FormEntity(
+          action: TextInputAction.next,
+          node: _nameNode,
           controller: widget.nameTextController,
           onChanged: _nameValidation,
           error: _nameErrorMessage,
@@ -90,6 +95,8 @@ class _NameAndEmailPageState extends State<NameAndEmailPage> {
           isInputTextValid: _isNameTextValid,
         ),
         FormEntity(
+          action: TextInputAction.done,
+          node: _emailNode,
           controller: widget.emailTextController,
           onChanged: _emailValidation,
           prefixIcon: Icons.email_rounded,

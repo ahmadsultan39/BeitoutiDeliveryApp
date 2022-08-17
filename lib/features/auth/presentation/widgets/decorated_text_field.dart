@@ -6,6 +6,7 @@ class DecoratedTextField extends StatelessWidget {
   final Function(String) onChanged;
   final String error;
   final bool isInputTextValid;
+  final FocusNode? node;
 
   // NULLABLE
   final TextInputType? textInputType;
@@ -26,6 +27,7 @@ class DecoratedTextField extends StatelessWidget {
   final EdgeInsets? contentPadding;
   final bool? enabled;
   final VoidCallback? onTap;
+  final TextInputAction? action;
 
   const DecoratedTextField({
     Key? key,
@@ -34,9 +36,11 @@ class DecoratedTextField extends StatelessWidget {
     required this.isInputTextValid,
     required this.error,
     this.contentPadding,
+    this.action,
     this.enabled,
     this.onTap,
     this.height,
+    this.node,
     this.fillColor,
     this.labelTextColor,
     this.labelTextSize,
@@ -67,7 +71,9 @@ class DecoratedTextField extends StatelessWidget {
           children: [
             SizedBox(
               height: height ?? 60.h,
-              child: TextField(
+              child: TextFormField(
+                textInputAction: action,
+                focusNode: node,
                 // CONTROLLER
                 controller: controller,
 
@@ -113,10 +119,10 @@ class DecoratedTextField extends StatelessWidget {
                   // PREFIX
                   prefixIcon: prefixIcon != null
                       ? Icon(
-                    prefixIcon,
-                    color: prefixIconColor ?? primaryColor,
-                    size: prefixIconSize ?? 15.sp,
-                  )
+                          prefixIcon,
+                          color: prefixIconColor ?? primaryColor,
+                          size: prefixIconSize ?? 15.sp,
+                        )
                       : null,
 
                   // FILL COLOR

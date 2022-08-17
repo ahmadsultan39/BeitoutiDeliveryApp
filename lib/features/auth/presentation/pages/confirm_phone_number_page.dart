@@ -67,6 +67,7 @@ class _ConfirmPhoneNumberPageState extends State<ConfirmPhoneNumberPage> {
                 width: 250.w,
                 child: PinCodeTextField(
                   controller: widget.pinCodeTextController,
+                  keyboardType: TextInputType.number,
                   appContext: context,
                   pinTheme: PinTheme.defaults(
                     selectedColor: Theme.of(context).primaryColor,
