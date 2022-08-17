@@ -31,14 +31,14 @@ class _$ProfileState extends ProfileState {
       this.balance,
       required this.orderHistory})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(message, 'ProfileState', 'message');
-    BuiltValueNullFieldError.checkNotNull(error, 'ProfileState', 'error');
+    BuiltValueNullFieldError.checkNotNull(message, r'ProfileState', 'message');
+    BuiltValueNullFieldError.checkNotNull(error, r'ProfileState', 'error');
     BuiltValueNullFieldError.checkNotNull(
-        isLoading, 'ProfileState', 'isLoading');
+        isLoading, r'ProfileState', 'isLoading');
     BuiltValueNullFieldError.checkNotNull(
-        isLoggedOut, 'ProfileState', 'isLoggedOut');
+        isLoggedOut, r'ProfileState', 'isLoggedOut');
     BuiltValueNullFieldError.checkNotNull(
-        orderHistory, 'ProfileState', 'orderHistory');
+        orderHistory, r'ProfileState', 'orderHistory');
   }
 
   @override
@@ -74,7 +74,7 @@ class _$ProfileState extends ProfileState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ProfileState')
+    return (newBuiltValueToStringHelper(r'ProfileState')
           ..add('message', message)
           ..add('error', error)
           ..add('isLoading', isLoading)
@@ -151,13 +151,13 @@ class ProfileStateBuilder
       _$result = _$v ??
           new _$ProfileState._(
               message: BuiltValueNullFieldError.checkNotNull(
-                  message, 'ProfileState', 'message'),
+                  message, r'ProfileState', 'message'),
               error: BuiltValueNullFieldError.checkNotNull(
-                  error, 'ProfileState', 'error'),
+                  error, r'ProfileState', 'error'),
               isLoading: BuiltValueNullFieldError.checkNotNull(
-                  isLoading, 'ProfileState', 'isLoading'),
+                  isLoading, r'ProfileState', 'isLoading'),
               isLoggedOut: BuiltValueNullFieldError.checkNotNull(
-                  isLoggedOut, 'ProfileState', 'isLoggedOut'),
+                  isLoggedOut, r'ProfileState', 'isLoggedOut'),
               balance: balance,
               orderHistory: orderHistory.build());
     } catch (_) {
@@ -167,7 +167,7 @@ class ProfileStateBuilder
         orderHistory.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ProfileState', _$failedField, e.toString());
+            r'ProfileState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -176,4 +176,4 @@ class ProfileStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

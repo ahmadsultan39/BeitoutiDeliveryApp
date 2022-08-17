@@ -18,7 +18,6 @@ abstract class Logout extends ProfileEvent
   }
 }
 
-
 /// SetLogoutValue
 abstract class SetLogoutValue extends ProfileEvent
     implements Built<SetLogoutValue, SetLogoutValueBuilder> {
@@ -26,7 +25,8 @@ abstract class SetLogoutValue extends ProfileEvent
 
   SetLogoutValue._();
 
-  factory SetLogoutValue([Function(SetLogoutValueBuilder b) updates]) = _$SetLogoutValue;
+  factory SetLogoutValue([Function(SetLogoutValueBuilder b) updates]) =
+      _$SetLogoutValue;
 
   factory SetLogoutValue.initial() {
     return SetLogoutValue((b) => b);
@@ -40,8 +40,7 @@ abstract class GetBalance extends ProfileEvent
 
   GetBalance._();
 
-  factory GetBalance([Function(GetBalanceBuilder b) updates]) =
-      _$GetBalance;
+  factory GetBalance([Function(GetBalanceBuilder b) updates]) = _$GetBalance;
 
   factory GetBalance.initial() {
     return GetBalance((b) => b);
@@ -54,6 +53,8 @@ abstract class GetOrdersHistory extends ProfileEvent
   //getter fields
 
   int get page;
+
+  bool get firstRequest;
 
   GetOrdersHistory._();
 

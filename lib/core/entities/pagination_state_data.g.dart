@@ -30,17 +30,17 @@ class _$PaginationStateData<T> extends PaginationStateData<T> {
       required this.total})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        items, 'PaginationStateData', 'items');
+        items, r'PaginationStateData', 'items');
     BuiltValueNullFieldError.checkNotNull(
-        isLoading, 'PaginationStateData', 'isLoading');
+        isLoading, r'PaginationStateData', 'isLoading');
     BuiltValueNullFieldError.checkNotNull(
-        isFinished, 'PaginationStateData', 'isFinished');
+        isFinished, r'PaginationStateData', 'isFinished');
     BuiltValueNullFieldError.checkNotNull(
-        currentPage, 'PaginationStateData', 'currentPage');
+        currentPage, r'PaginationStateData', 'currentPage');
     BuiltValueNullFieldError.checkNotNull(
-        total, 'PaginationStateData', 'total');
+        total, r'PaginationStateData', 'total');
     if (T == dynamic) {
-      throw new BuiltValueMissingGenericsError('PaginationStateData', 'T');
+      throw new BuiltValueMissingGenericsError(r'PaginationStateData', 'T');
     }
   }
 
@@ -76,7 +76,7 @@ class _$PaginationStateData<T> extends PaginationStateData<T> {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PaginationStateData')
+    return (newBuiltValueToStringHelper(r'PaginationStateData')
           ..add('items', items)
           ..add('isLoading', isLoading)
           ..add('isFinished', isFinished)
@@ -146,13 +146,13 @@ class PaginationStateDataBuilder<T>
           new _$PaginationStateData<T>._(
               items: items.build(),
               isLoading: BuiltValueNullFieldError.checkNotNull(
-                  isLoading, 'PaginationStateData', 'isLoading'),
+                  isLoading, r'PaginationStateData', 'isLoading'),
               isFinished: BuiltValueNullFieldError.checkNotNull(
-                  isFinished, 'PaginationStateData', 'isFinished'),
+                  isFinished, r'PaginationStateData', 'isFinished'),
               currentPage: BuiltValueNullFieldError.checkNotNull(
-                  currentPage, 'PaginationStateData', 'currentPage'),
+                  currentPage, r'PaginationStateData', 'currentPage'),
               total: BuiltValueNullFieldError.checkNotNull(
-                  total, 'PaginationStateData', 'total'));
+                  total, r'PaginationStateData', 'total'));
     } catch (_) {
       late String _$failedField;
       try {
@@ -160,7 +160,7 @@ class PaginationStateDataBuilder<T>
         items.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'PaginationStateData', _$failedField, e.toString());
+            r'PaginationStateData', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -169,4 +169,4 @@ class PaginationStateDataBuilder<T>
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

@@ -3,6 +3,7 @@ import 'package:beitouti_delivery/core/util/enums.dart';
 import 'package:beitouti_delivery/core/widgets/custom_loader.dart';
 import 'package:beitouti_delivery/features/current_delivery/presentation/widgets/current_delivery_details.dart';
 import 'package:beitouti_delivery/features/order/presentation/bloc/order.dart';
+import 'package:beitouti_delivery/features/order/presentation/widgets/report_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,6 +47,25 @@ class _OrderPageState extends State<OrderPage> {
         return Scaffold(
           appBar: AppBar(
             title: const Text("تفاصيل الطلب"),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => ReportDialog(
+                      report: (reportedOn, reason) {
+                        _bloc.addReportOrderEvent(
+                          orderId: widget.orderId,
+                          reason: reason,
+                          reportedOn: reportedOn == 'الطالب' ? 'user' : 'chef',
+                        );
+                      },
+                    ),
+                  );
+                },
+                icon: const Text("إبلاغ"),
+              ),
+            ],
           ),
           body: Stack(
             children: [
@@ -114,18 +134,19 @@ class _OrderPageState extends State<OrderPage> {
                                   ),
                                   child: GestureDetector(
                                     onTap: () {
-                                            if (state.order!.status! == OrderStatus.prepared) {
-                                              _bloc.addChangeOrderStatusEvent(
-                                                orderId: widget.orderId,
-                                                newStatus: OrderStatus.picked,
-                                              );
-                                            } else if (state.order!.status! ==
-                                                OrderStatus.picked) {
-                                              _bloc.addChangeOrderStatusEvent(
-                                                orderId: widget.orderId,
-                                                newStatus: OrderStatus.delivered,
-                                              );
-                                            }
+                                      if (state.order!.status! ==
+                                          OrderStatus.prepared) {
+                                        _bloc.addChangeOrderStatusEvent(
+                                          orderId: widget.orderId,
+                                          newStatus: OrderStatus.picked,
+                                        );
+                                      } else if (state.order!.status! ==
+                                          OrderStatus.picked) {
+                                        _bloc.addChangeOrderStatusEvent(
+                                          orderId: widget.orderId,
+                                          newStatus: OrderStatus.delivered,
+                                        );
+                                      }
                                     },
                                     child: Container(
                                       width: double.infinity,
@@ -215,59 +236,6 @@ class _OrderPageState extends State<OrderPage> {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: EdgeInsets.symmetric(
-                      //     horizontal: 20.w,
-                      //     vertical: 20.h,
-                      //   ),
-                      //   child: GestureDetector(
-                      //     onTap: () {
-                      //       if (state.order!.status! == OrderStatus.prepared) {
-                      //         _bloc.addChangeOrderStatusEvent(
-                      //           orderId: widget.orderId,
-                      //           newStatus: OrderStatus.picked,
-                      //         );
-                      //       } else if (state.order!.status! ==
-                      //           OrderStatus.picked) {
-                      //         _bloc.addChangeOrderStatusEvent(
-                      //           orderId: widget.orderId,
-                      //           newStatus: OrderStatus.delivered,
-                      //         );
-                      //       }
-                      //     },
-                      //     child: Container(
-                      //       width: 200.w,
-                      //       height: 100.h,
-                      //       color: Colors.grey,
-                      //       child: const Center(
-                      //         child: Text("Change Order Status"),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.symmetric(
-                      //     horizontal: 20.w,
-                      //     vertical: 20.h,
-                      //   ),
-                      //   child: GestureDetector(
-                      //     onTap: () {
-                      //       _bloc.addReportOrderEvent(
-                      //         orderId: widget.orderId,
-                      //         reason: "reason",
-                      //         reportedOn: 'user',
-                      //       );
-                      //     },
-                      //     child: Container(
-                      //       width: 200.w,
-                      //       height: 100.h,
-                      //       color: Colors.grey,
-                      //       child: const Center(
-                      //         child: Text("Report Order"),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),

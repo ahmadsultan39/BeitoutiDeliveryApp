@@ -5,7 +5,9 @@ import 'package:beitouti_delivery/features/profile/domain/use_cases/logout_use_c
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/entities/pagination_state_data.dart';
 import '../../../../core/network/params/paginate_list_params.dart';
+import '../../domain/entities/order_history.dart';
 import 'profile.dart';
 
 @lazySingleton
@@ -18,8 +20,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     add(ClearMessage());
   }
 
-  void addGetOrdersHistoryEvent() {
-    add(GetOrdersHistory((b) => b..page = state.orderHistory.currentPage));
+  void addGetOrdersHistoryEvent({bool firstRequest = false}) {
+    add(GetOrdersHistory(
+      (b) => b
+        ..page = state.orderHistory.currentPage
+        ..firstRequest = firstRequest,
+    ));
   }
 
   void addGetBalanceEvent() {
@@ -85,6 +91,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
         /// *** GetOrderHistory *** ///
         if (event is GetOrdersHistory) {
+          if (event.firstRequest) {
+            emit(
+              state.rebuild(
+                (b) => b
+                  ..orderHistory.replace(
+                    PaginationStateData<OrderHistory>.initial(),
+                  ),
+              ),
+            );
+          }
           if (!state.orderHistory.isFinished) {
             if (event.page == 1) {
               emit(state.rebuild((b) => b..isLoading = true));
