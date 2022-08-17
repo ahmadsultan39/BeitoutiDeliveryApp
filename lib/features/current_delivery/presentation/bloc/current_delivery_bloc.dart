@@ -36,7 +36,13 @@ class CurrentDeliveryBloc
 
       /*** GetCurrentDelivery ***/
       if (event is GetCurrentDelivery) {
-        emit(state.rebuild((b) => b..isLoading = true));
+        emit(
+          state.rebuild(
+            (b) => b
+              ..isLoading = true
+              ..currentDelivery = null,
+          ),
+        );
 
         final result = await _getCurrentDeliveryUseCase(NoParams());
 
